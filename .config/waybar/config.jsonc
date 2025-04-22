@@ -1,0 +1,159 @@
+{
+// sourced from header module //
+
+    "layer": "bottom",
+    "position": "top",
+    "mod": "dock",
+    "height": 35,
+    "exclusive": true,
+    "passthrough": false,
+    "gtk-layer-shell": true,
+
+
+	"modules-left": ["custom/left","custom/rofi","custom/space","hyprland/window","custom/right","custom/left","temperature","cpu","custom/right"],
+	"modules-center": ["custom/left","hyprland/workspaces","custom/right"],
+	"modules-right": ["custom/left", "backlight", "pulseaudio","battery","tray","custom/right","custom/left","clock","custom/right"],
+
+
+"hyprland/window": {
+    "rewrite": {
+      "(.*) - Brave": "$1",
+      "(.*) - Chromium": "$1",
+      "(.*) - Brave Search": "$1",
+      "(.*) - Outlook": "$1",
+      "(.*) Microsoft Teams": "$1"
+    },
+    "separate-outputs": true
+  }, 
+
+"cpu": {
+        "interval": 10,
+        "format": "󰍛 {usage}%",
+        "format-alt": "{icon0}{icon1}{icon2}{icon3}",
+        "format-icons": ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█"]
+    },
+
+
+   "network": {
+        "tooltip": true,
+        "format-wifi": "<span foreground='#FFFFFF'> {bandwidthDownBytes}</span> <span foreground='#FFFFFF'> {bandwidthUpBytes}</span>",
+        "format-ethernet": "<span foreground='#FF8B49'> {bandwidthDownBytes}</span> <span foreground='#FF6962'> {bandwidthUpBytes}</span>",
+        "tooltip-format": "Network: <big><b>{essid}</b></big>\nSignal strength: <b>{signaldBm}dBm ({signalStrength}%)</b>\nFrequency: <b>{frequency}MHz</b>\nInterface: <b>{ifname}</b>\nIP: <b>{ipaddr}/{cidr}</b>\nGateway: <b>{gwaddr}</b>\nNetmask: <b>{netmask}</b>",
+        "format-linked": "󰈀 {ifname} (No IP)",
+        "format-disconnected": " 󰖪 ",
+        "tooltip-format-disconnected": "Disconnected",
+        "interval": 2,
+        "on-click-right": "~/.config/waybar/network.py"
+  },
+
+
+     "temperature": {
+    // "thermal-zone": 2,
+    // "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
+    // "critical-threshold": 80,
+    // "format-critical": "{temperatureC}°C ",
+    "format": "{temperatureC}°C "
+    },
+
+    "custom/space": {
+        "format": "┃ {}",
+        "on-click": "~/.config/hypr/scripts/Rofi-launcher.sh"
+	},
+
+     "custom/rofi": {
+        "format": "{}",
+	"on-click": "anyrun",
+	"on-click-right": "sh ~/.config/hypr/scripts/wlogout.sh"
+	},
+
+    "hyprland/workspaces": {
+        "disable-scroll": false,
+        "all-outputs": true,
+        "on-click": "activate",
+        "persistent_workspaces": {
+            "1": [],
+            "2": [],
+            "3": [],
+            "4": [],
+            "5": []
+        }
+    },
+
+    "battery": {
+        "states": {
+            "good": 95,
+            "warning": 30,
+            "critical": 20
+        },
+        "format": "{icon} {capacity}%",
+        "format-charging": " {capacity}%",
+        "format-plugged": " {capacity}%",
+	"on-click-right": "kitty battop",
+        "format-alt": "{time} {icon}",
+        "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
+    },
+ 
+    "pulseaudio": {
+        "format": "{icon} {volume}%",
+        "format-muted": "婢 {volume}%",
+        "on-click": "swayosd-client --output-volume=mute-toggle",
+        "on-click-right": "pavucontrol -t 3",
+        "on-click-middle": "python ~/.config/hypr/scripts/speaker_switch.py",
+        "on-scroll-up": "swayosd-client --output-volume=+5 --max-volume 150",
+        "on-scroll-down": "swayosd-client --output-volume=-5 --max-volume 150",
+        "tooltip-format": "{icon} {desc} // {volume}%",
+        "scroll-step": 5,
+        "format-icons": {
+            "headphone": "",
+            "hands-free": "",
+            "headset": "",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["", "", ""]
+   }
+    },
+
+
+    "tray": {
+    "icon-size": 20,
+    "spacing": 9
+   },
+
+
+  "clock": {
+        "format": "  {:%A %d/%m/%Y    %H:%M:%S}",
+	"interval": 1,
+        "on-click": "kitty peaclock"
+      },
+
+
+   "backlight": {
+    "device": "intel_backlight",
+    "on-scroll-up": "swayosd-client --brightness=+5",
+    "on-scroll-down": "swayosd-client --brightness=-5",
+    "format": "{icon} {percent}%",
+    "format-icons": [
+      "󰃞",
+      "󰃝",
+      "󰃟",
+      "󰃠"
+    ]
+    },
+
+
+// modules for padding //
+
+    "custom/left": {
+        "format": " ",
+        "interval" : "once",
+        "tooltip": false
+    },
+
+    "custom/right": {
+        "format": " ",
+        "interval" : "once",
+        "tooltip": false
+    }
+
+}
