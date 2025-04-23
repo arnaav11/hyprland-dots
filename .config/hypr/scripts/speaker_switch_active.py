@@ -1,6 +1,10 @@
 import subprocess, time
 
-# subprocess.run(["pactl", "set-default-sink", "bluez_output.F0_AE_66_F5_8A_AD.1"])
+
+# Change the value in quotes to the MAC address of yout Bluetooth device
+mac_address = "34:E3:FB:80:84:13"
+
+# subprocess.run(["pactl", "set-default-sink", "bluez_output.{mac_address}.1"])
 
 # time.sleep(2)
 
@@ -48,8 +52,8 @@ for i in s2.splitlines():
             print(f"Found name {s4}")
 
             if s5 != bluetooh_id:
-                subprocess.run(["pactl", "move-sink-input", f"{s3}", f"bluez_output.F0_AE_66_F5_8A_AD.1"])
-                print("pactl", "move-sink-input", f"{s3}", f"bluez_output.F0_AE_66_F5_8A_AD.1")
+                subprocess.run(["pactl", "move-sink-input", f"{s3}", f"bluez_output.{mac_address}.1"])
+                print("pactl", "move-sink-input", f"{s3}", f"bluez_output.{mac_address}.1")
             else:
                 subprocess.run(["pactl", "move-sink-input", f"{s3}", f"alsa_output.pci-0000_04_00.6.analog-stereo"])
                 print("pactl", "move-sink-input", f"{s3}", f"alsa_output.pci-0000_04_00.6.analog-stereo")
