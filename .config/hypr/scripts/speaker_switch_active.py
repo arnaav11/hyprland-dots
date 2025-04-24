@@ -1,61 +1,55 @@
-import subprocess, time
+import subprocess
+# import time
 
 
-# Change the value in quotes to the MAC address of yout Bluetooth device
-mac_address = "34:E3:FB:80:84:13"
+default_sink = subprocess.getoutput(["pactl get-default-sink"])
+sinks_raw = subprocess.getoutput([f"pactl list sinks | grep \"Sink #\""]).split('\n')
+print("pactl list sinks | grep \"{default_sink}\"")
+default_sink_num = int(subprocess.getoutput([f"pactl list short sinks | grep \"{default_sink}\""]).split('\t')[0])
+to_change = -1
 
-# subprocess.run(["pactl", "set-default-sink", "bluez_output.{mac_address}.1"])
+
+sinks = []
+for raw_sink_line in sinks_raw:
+    sinks.append(int(raw_sink_line.split("#")[1]))
+
+for sink_num in sinks:
+    if sink_num != default_sink_num:
+        # subprocess.run(["pactl", "set-default-sink", str(sink_num)])
+        to_change = sink_num
 
 # time.sleep(2)
 
-s1 = subprocess.getoutput(["hyprctl activewindow"]).split("\n")[10].strip()[7:]
-s2 = subprocess.getoutput(["pactl list sink-inputs"])
+current_window_name = subprocess.getoutput(["hyprctl activewindow | grep \"title: \""]).strip().split(": ")[1]
+sink_inputs_info_raw = subprocess.getoutput(["pactl list sink-inputs"]).split('\n')
 
-sinks = subprocess.getoutput(["pactl list short sinks"])
+print(current_window_name)
 
-sinks = sinks.splitlines()
-for i in sinks:
-    i = i.strip()
+
+for sink_input_info_raw in sink_inputs_info_raw:
+
+    sink_input_info_raw = sink_input_info_raw.strip()
+    found_sink_input_num = sink_input_info_raw.find(f"Input #")
+
+    if found_sink_input_num >= 0:
+        sink_input_num = sink_input_info_raw.split("#")[1]
+        print(f"found sink input: {sink_input_num}")
+
+    found_sink_input_sink = sink_input_info_raw.find("Sink: ")
+    if found_sink_input_sink >= 0:
+        sink_input_sink_num = sink_input_info_raw.split(": ")[1]
+        print(f"Found sink: {sink_input_sink_num}")
     
-    if "bluez" in i:
-        bluetooh_id = ""
-        x = 0
-        while i[x].isdigit():
-            bluetooh_id += i[x]
-            x += 1
+    found_sink_input_name = sink_input_info_raw.find("media.name")
+    if found_sink_input_name >= 0:
+        sink_input_name = sink_input_info_raw.split(" = ")[1].strip("\"")
+        sink_input_name = sink_input_name[:len(sink_input_name)-1]
+        print(sink_input_name)
 
-        print(f"Found device ID: {bluetooh_id}")
+        if current_window_name in sink_input_name or sink_input_name in current_window_name:
+            print(f"Match found {sink_input_name}")
 
-print(s1)
-
-
-for i in s2.splitlines():
-    i = i.strip()
-    found = i.find("Input #")
-    if found >= 0:
-        s3 = i[found+7:]
-        print(f"Found ID {s3}\n")
-
-    found_x = i.find("Sink: ")
-    if found_x >= 0:
-        s5 = i[found_x+6:]
-        print(f"Found sink: {s5}")
-    
-    found_2 = i.find("media.name")
-    if found_2 >= 0:
-        s4 = i[found_2+14:]
-        s4 = s4[:len(s4)-1]
-
-        print(s4)
-
-        if s1 in s4 or s4 in s1:
-            print(f"Found name {s4}")
-
-            if s5 != bluetooh_id:
-                subprocess.run(["pactl", "move-sink-input", f"{s3}", f"bluez_output.{mac_address}.1"])
-                print("pactl", "move-sink-input", f"{s3}", f"bluez_output.{mac_address}.1")
-            else:
-                subprocess.run(["pactl", "move-sink-input", f"{s3}", f"alsa_output.pci-0000_04_00.6.analog-stereo"])
-                print("pactl", "move-sink-input", f"{s3}", f"alsa_output.pci-0000_04_00.6.analog-stereo")
+            if to_change >= 0:
+                subprocess.run(["pactl", "move-sink-input", f"{sink_input_num}", f"{to_change}"])
             
             break
