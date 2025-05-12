@@ -12,6 +12,7 @@ sinks = []
 for raw_sink_line in sinks_raw:
     sinks.append(int(raw_sink_line.split("#")[1]))
 
+print(sinks)
 for sink_num in sinks:
     if sink_num != default_sink_num:
         subprocess.run(["pactl", "set-default-sink", str(sink_num)])

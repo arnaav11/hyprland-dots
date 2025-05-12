@@ -95,7 +95,7 @@
  
     "pulseaudio": {
         "format": "{icon} {volume}%",
-        "format-muted": "婢 {volume}%",
+        "format-muted": "󰖁 {volume}%",
         "on-click": "swayosd-client --output-volume=mute-toggle",
         "on-click-right": "pavucontrol -t 3",
         "on-click-middle": "python ~/.config/hypr/scripts/speaker_switch.py",
