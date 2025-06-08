@@ -1,0 +1,46 @@
+dev:
+  type: http
+  region: us
+  to: localhost:9090
+
+minecraft:
+  type: tcp
+  region: us
+  port: 7676
+  to: localhost:25565
+
+portal:
+  type: http
+  subdomain: hello
+  region: us
+  to: localhost:8080
+  plugins:
+    basic_auth: user:pass
+    ip_whitelist:
+      - 127.0.0.1
+      - 192.168.100.21/24
+
+chat:
+  type: tls
+  subdomain: secure
+  region: us
+  to: localhost:2090
+
+work:
+  type: http
+  region: us
+  to: localhost:9090
+  plugins:
+    request_header:
+      - host:mydomain.com
+      - X-Token:secureToken
+    response_header:
+      - role:admin
+
+file-server:
+  type: http
+  region: us
+  reserved_domain: mydomain.com
+  apps:
+    file_server:
+      path: ./
