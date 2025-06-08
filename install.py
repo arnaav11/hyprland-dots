@@ -3,6 +3,7 @@ from datetime import datetime as dt
 
 os.chdir('/'.join(__file__.split('/')[::-1][1:][::-1])+'/')
 
+bookmarks = ['Documents', 'Music', 'Pictures', 'Videos', 'Downloads']
 dirs = [i for i in os.listdir() if os.path.isdir(i) and i != '.git']
 dirs__ = [i for i in dirs if i != '.local']
 dirs__.append('.local/share')
@@ -73,6 +74,12 @@ if choice in ['i', 'install']:
             print(f'Copying ./{i}/{j} to {home_path}/{i}/{j}')
             subprocess.run(['rm', '-rf', f'{home_path}/{i}/{j}'])
             subprocess.run(['cp', '-r', f'./{i}/{j}', f'{home_path}/{i}/'])
+    
+    lines = [f'{home_path}/{i} {i}\n' for i in bookmarks]
+    with open(f'{home_path}/.config/gtk-3.0/bookmarks', 'w') as file:
+        file.writelines(lines)
+    with open(f'{home_path}/.config/gtk-4.0/bookmarks', 'w') as file:
+        file.writelines(lines)
 
     print("Installation is complete, a reboot is needed to see changes")
     print('Reboot now?')
