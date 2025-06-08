@@ -2,6 +2,8 @@
 
 This is a basic setup which I found to be very comfortable to use. It has some nifty scripts that I made myself
 
+Made from [Hypr-Dots](https://github.com/MrVivekRajan/Hypr-Dots) by MrVivekRajan
+
 ## Prerequisites
 - git
 - yay
