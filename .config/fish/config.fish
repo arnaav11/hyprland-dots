@@ -117,6 +117,6 @@ set XDG_CURRENT_DESKTOP hyprland
 set PATH $PATH /home/flicko/.local/bin
 
 # Autostart hyprland on login (use getty for autologin)
-if uwsm check may-start; then
-    exec uwsm start hyprland.desktop
-end
+# if uwsm check may-start; then
+#     exec uwsm start hyprland.desktop
+# end
