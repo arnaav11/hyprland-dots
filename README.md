@@ -18,3 +18,4 @@ This is a basic setup which I found to be very comfortable to use. It has some n
    - ```bash
      python installer.py
      ```
+- Follow steps in the installer
