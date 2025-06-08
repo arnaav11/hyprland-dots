@@ -11,8 +11,8 @@ This is a basic setup which I found to be very comfortable to use. It has some n
 
 - Clone the repo
    - ```bash
-        git clone https://github.com/arnaav11/hyprland-dots
-        cd hyprland-dots
+     git clone https://github.com/arnaav11/hyprland-dots
+     cd hyprland-dots
      ```
 - Run the python installer
    - ```bash
