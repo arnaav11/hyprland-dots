@@ -64,7 +64,7 @@ if choice in ['i', 'install']:
 
     print("Installing required packages...")
     time.sleep(0.3)    
-    subprocess.run('yay -Syu --needed kitty firefox nemo gpu-screen-recorder-gtk gpu-screen-recorder anyrun-git swayosd swaync playerctl waybar hyprpaper hyprlock hyprpicker grim slurp swappy wlogout qt5ct qt6ct nwg-look nwg-displays kvantum starship thefuck pokemon-colorscripts-git'.split())
+    subprocess.run('yay -Syu --needed kitty firefox nemo gpu-screen-recorder-gtk gpu-screen-recorder anyrun-git swayosd swaync playerctl waybar hyprpaper hyprlock hyprpicker grim slurp swappy wlogout qt5ct qt6ct nwg-look nwg-displays kvantum starship thefuck pokemon-colorscripts-git fish'.split())
 
     print('Copying dotfiles...')
     time.sleep(0.3)
